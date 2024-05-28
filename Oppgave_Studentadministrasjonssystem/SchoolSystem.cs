@@ -65,7 +65,7 @@
             Console.Clear();
             foreach (var student in AllStudents)
             {
-                student.PrintOutInfoSummary();
+                student.PrintOutInfoAll();
             }
 
             Console.WriteLine($"\nSkriv inn student id-en til den du har lyst å se mer info på");

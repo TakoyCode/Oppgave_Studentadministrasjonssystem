@@ -1,4 +1,7 @@
-﻿namespace Oppgave_Studentadministrasjonssystem
+﻿using System.Diagnostics;
+using System.Xml.Linq;
+
+namespace Oppgave_Studentadministrasjonssystem
 {
     internal class Student
     {
@@ -28,7 +31,7 @@
             string age = $"Alder: {_age}";
             string studentId = $"Student Id: {_studentId}";
 
-            Console.WriteLine(name + PadSpacesLeft(name, 35) + age + PadSpacesLeft(age, 25) + studentId);
+            Console.WriteLine(name + PadSpacesLeft(name, 36) + age + PadSpacesLeft(age, 35) + studentId);
         }
 
         public void PrintOutInfoAll()
@@ -43,18 +46,29 @@
                     
                     string text = "Fag:";
                     text += " " + subject._subjectName;
-                    
+
                     if (subject == _grades[index].Subject)
                     {
-                        text += PadSpacesLeft(text, 34) + $"Karakter: {_grades[0].GradeNum}";
+                        string grade = $"Karakter: {_grades[0].GradeNum}";
 
+                        text += PadSpacesLeft(text, 35) + grade + PadSpacesLeft(grade, 35);
                     };
+                    
+                    string credit = $"Studie poeng: {subject.Credits}";
+                    text += credit;
                     Console.WriteLine(text);
                 }
-                Console.WriteLine($"{GetAverageGrade()} {GetCredit()}");
+
+                string averageGrade = $"Gjennomsnitts karakter: {GetAverageGrade()}";
+                string totalCredits = $"Sammenlagt studiepoeng: {GetCredit()}";
+                Console.WriteLine(PadSpacesLeft(35) + averageGrade + PadSpacesLeft(averageGrade,35) + totalCredits);
             }
         }
 
+        private static string PadSpacesLeft(int padding)
+        {
+            return "".PadLeft(padding);
+        }
         private static string PadSpacesLeft(string text, int padding)
         {
             return "".PadLeft(padding - text.Length);
@@ -79,8 +93,6 @@
             }
             return num;
         }
-
-        
 
     }
 
