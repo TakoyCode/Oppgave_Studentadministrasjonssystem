@@ -1,4 +1,6 @@
-﻿namespace Oppgave_Studentadministrasjonssystem
+﻿using System.Threading.Tasks;
+
+namespace Oppgave_Studentadministrasjonssystem
 {
     internal class SchoolSystem
     {
@@ -18,11 +20,12 @@
             AllStudents = new List<Student>
             {
                 new Student("Bob Smith", 32, 1, [SchoolSystem.GetSubjectViaCode(0)]),
-                new Student("Steven Baker", 25, 2, [SchoolSystem.GetSubjectViaCode(1)]),
+                new Student("Steven Baker", 25, 2, [SchoolSystem.GetSubjectViaCode(1), SchoolSystem.GetSubjectViaCode(2)]),
             };
 
             AllStudents[0].AddGrade(AllSubjects[0], 4);
             AllStudents[1].AddGrade(AllSubjects[1], 2);
+            AllStudents[1].AddGrade(AllSubjects[2], 6);
         }
 
         private static int GetCurrentSubjectCode()
@@ -65,12 +68,37 @@
             Console.Clear();
             foreach (var student in AllStudents)
             {
-                student.PrintOutInfoAll();
+                student.PrintOutInfoSummary();
             }
 
-            Console.WriteLine($"\nSkriv inn student id-en til den du har lyst å se mer info på");
-            //ShowStudentView();
-            Console.ReadKey(true);
+            Console.Write($"\nSkriv inn student id for mer info eller trykk X for å gå tilbake: ");
+            ShowStudentView();
+        }
+
+        private static void ShowStudentView()
+        {
+            string userinputStr = Console.ReadLine();
+            if (userinputStr.ToLower() == "x") { return; }
+            if (Int32.TryParse(userinputStr, out int userinput))
+            {
+                Console.Clear();
+                for (int i = 0; i < AllStudents.Count; i++)
+                {
+                    if (userinput-1 == i)
+                    {
+                        AllStudents[i].PrintOutInfoAll();
+                    }
+                }
+
+                Console.Write("\nTrykk på hvilken som helst tast for å gå til start...");
+                Console.ReadKey(true);
+            }
+            else
+            {
+                Console.WriteLine("Skriv inn en student id neste gang :)");
+                ShowStudentView();
+            }
+
         }
 
         private static void ShowSubjects()
@@ -83,7 +111,6 @@
 
             Console.Write("\nTrykk på hvilken som helst tast for å gå tilbake...");
             Console.ReadKey(true);
-
         }
 
         private static void ShowMenu()
