@@ -51,7 +51,7 @@
                     };
                     Console.WriteLine(text);
                 }
-
+                Console.WriteLine($"{GetAverageGrade()} {GetCredit()}");
             }
         }
 
@@ -59,6 +59,29 @@
         {
             return "".PadLeft(padding - text.Length);
         }
+
+        private int GetAverageGrade()
+        {
+            int num = 0;
+            foreach (var grade in _grades)
+            {
+                num += grade.GradeNum;
+            }
+            return num;
+        }
+
+        private int GetCredit()
+        {
+            int num = 0;
+            foreach (var subject in _subjects)
+            {
+                num += subject.Credits;
+            }
+            return num;
+        }
+
+        
+
     }
 
     
