@@ -98,7 +98,6 @@ namespace Oppgave_Studentadministrasjonssystem
                 Console.WriteLine("Skriv inn en student id neste gang :)");
                 ShowStudentView();
             }
-
         }
 
         private static void ShowSubjects()

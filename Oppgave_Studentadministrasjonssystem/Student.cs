@@ -47,12 +47,15 @@ namespace Oppgave_Studentadministrasjonssystem
                     string text = "Fag:";
                     text += " " + subject._subjectName;
 
-                    if (subject == _grades[index].Subject)
+                    foreach (var grade in _grades)
                     {
-                        string grade = $"Karakter: {_grades[0].GradeNum}";
+                        if (subject == grade.Subject)
+                        {
+                            string gradeStr = $"Karakter: {grade.GradeNum}";
 
-                        text += PadSpacesLeft(text, 35) + grade + PadSpacesLeft(grade, 35);
-                    };
+                            text += PadSpacesLeft(text, 35) + gradeStr + PadSpacesLeft(gradeStr, 35);
+                        };
+                    }
                     
                     string credit = $"Studie poeng: {subject.Credits}";
                     text += credit;
@@ -74,14 +77,16 @@ namespace Oppgave_Studentadministrasjonssystem
             return "".PadLeft(padding - text.Length);
         }
 
-        private int GetAverageGrade()
+        private double GetAverageGrade()
         {
             int num = 0;
+            int totalGrades = 0;
             foreach (var grade in _grades)
             {
+                totalGrades++;
                 num += grade.GradeNum;
             }
-            return num;
+            return num / totalGrades;
         }
 
         private int GetCredit()
